@@ -40,15 +40,21 @@ const auditerStructureAgenda = () => {
     const calendarId = 'primary';
     const timeZone = Calendar.Settings.get('timezone').value;
     const now = new Date();
-    const future = new Date();
-    future.setDate(now.getDate() + CONFIG_AUDIT.PERIODE_ANALYSE_JOURS);
+    // Calcul du lundi de la semaine actuelle
+    const jourCourant = now.getDay(); 
+    const decalageLundi = now.getDate() - jourCourant + (jourCourant === 0 ? -6 : 1);
+    const debutSemaine = new Date(now.setDate(decalageLundi));
+    debutSemaine.setHours(0, 0, 0, 0);
+
+    const future = new Date(debutSemaine);
+    future.setDate(debutSemaine.getDate() + CONFIG_AUDIT.PERIODE_ANALYSE_JOURS);
 
     // 1. GESTION DU BIAIS DE PAGINATION
     let allEvents = [];
     let pageToken = null;
     do {
       const reponse = Calendar.Events.list(calendarId, {
-        timeMin: now.toISOString(),
+        timeMin: debutSemaine.toISOString(), // Utilisation du lundi à 00h00
         timeMax: future.toISOString(),
         singleEvents: true,
         orderBy: 'startTime',
@@ -206,14 +212,10 @@ const envoyerEmailAudit = (structure, zonesBlanches, chevauchements, nomsJours, 
         ${events.length === 0 ? '<div style="font-size: 12px; color: #9aa0a6; padding: 15px; font-style: italic;">Aucune réunion systématique.</div>' : 
           events.map(e => `
             <a href="${e.link}" style="text-decoration:none; color:inherit; display:block; margin: 8px 0;">
-              <div style="font-size: 13px; border-left: 4px solid ${e.frequence === 'Hebdo' ? CONFIG_AUDIT.COULEURS.hebdo : CONFIG_AUDIT.COULEURS.mensuel}; padding: 10px 12px; background: #f8f9fa; border-radius: 0 8px 8px 0;">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td><b style="color:#202124;">${e.heure}</b> - ${e.titre}</td>
-                    <td align="right" style="font-size: 11px; color: #70757a; font-weight: bold; white-space: nowrap; padding-left: 10px;">${e.frequence}</td>
-                  </tr>
-                </table>
-              </div>
+          <div style="font-size: 13px; border-left: 4px solid ${
+          e.frequence === 'Hebdo' ? CONFIG_AUDIT.COULEURS.hebdo : 
+          (e.frequence === 'Bi-mensuel' ? CONFIG_AUDIT.COULEURS.mensuel : CONFIG_AUDIT.COULEURS.autre)
+        }; padding: 10px 12px; background: #f8f9fa; border-radius: 0 8px 8px 0;">
             </a>
           `).join('')
         }
