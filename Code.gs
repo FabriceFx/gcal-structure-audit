@@ -212,10 +212,17 @@ const envoyerEmailAudit = (structure, zonesBlanches, chevauchements, nomsJours, 
         ${events.length === 0 ? '<div style="font-size: 12px; color: #9aa0a6; padding: 15px; font-style: italic;">Aucune réunion systématique.</div>' : 
           events.map(e => `
             <a href="${e.link}" style="text-decoration:none; color:inherit; display:block; margin: 8px 0;">
-          <div style="font-size: 13px; border-left: 4px solid ${
-          e.frequence === 'Hebdo' ? CONFIG_AUDIT.COULEURS.hebdo : 
-          (e.frequence === 'Bi-mensuel' ? CONFIG_AUDIT.COULEURS.mensuel : CONFIG_AUDIT.COULEURS.autre)
-        }; padding: 10px 12px; background: #f8f9fa; border-radius: 0 8px 8px 0;">
+              <div style="font-size: 13px; border-left: 4px solid ${
+                e.frequence === 'Hebdo' ? CONFIG_AUDIT.COULEURS.hebdo : 
+                (e.frequence === 'Bi-mensuel' ? CONFIG_AUDIT.COULEURS.mensuel : CONFIG_AUDIT.COULEURS.autre)
+              }; padding: 10px 12px; background: #f8f9fa; border-radius: 0 8px 8px 0;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><b style="color:#202124;">${e.heure}</b> - ${e.titre}</td>
+                    <td align="right" style="font-size: 11px; color: #70757a; font-weight: bold; white-space: nowrap; padding-left: 10px;">${e.frequence}</td>
+                  </tr>
+                </table>
+              </div>
             </a>
           `).join('')
         }
