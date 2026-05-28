@@ -1,8 +1,14 @@
 # 📅 GCal Structure Audit
 
+
+[🇫🇷 Version Française](#-version-française) | [🇬🇧 English Version](#-english-version)
+
 ![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-4285F4?style=for-the-badge&logo=google-apps-script&logoColor=white)
 ![Google Calendar](https://img.shields.io/badge/Google%20Calendar-4285F4?style=for-the-badge&logo=google-calendar&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+
+## 🇫🇷 Version Française
+
 
 Audit de structure d'agenda est un outil de diagnostic avancé pour Google Calendar. Contrairement à une simple lecture d'événements, ce script analyse la **charpente de collaboration** d'un utilisateur en isolant les séries récurrentes pour identifier la charge fixe réelle et les zones de flexibilité.
 
@@ -125,3 +131,12 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ## ✍️ Author
 
 * **Fabrice Faucheux** - *Initial Development & Concept*.
+
+
+---
+## 🇬🇧 English Version
+
+> English translation coming soon.
+
+---
+<p align="center"><a href="https://faucheux.bzh" target="_blank" style="color: inherit; text-decoration: none;">&lt;&gt; par Fabrice Faucheux</a></p>
